@@ -1,0 +1,11 @@
+# Gradle files
+.gradle
+build
+
+# Intellij
+.idea
+*.iml
+
+# File with tests
+*.in
+*.out
