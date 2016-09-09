@@ -11,7 +11,7 @@ public class Main {
     }
 
     private void run() {
-        scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in, System.getProperty("console.encoding", "Cp866"));
         while (true) {
             System.out.println("Выберите действие: ");
             System.out.println("1. Закодировать");
