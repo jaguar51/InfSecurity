@@ -1,0 +1,2 @@
+rootProject.name = 'InfSecurity'
+include 'lab1'
