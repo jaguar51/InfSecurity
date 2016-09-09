@@ -109,9 +109,7 @@ public class StencilCode {
         byte[][] res = new byte[matrix.length][];
         for (int i = 0; i < matrix.length; i++) {
             res[i] = new byte[matrix[i].length];
-            for (int j = 0; j < matrix[i].length; j++) {
-                res[i][j] = matrix[i][j];
-            }
+            System.arraycopy(matrix[i], 0, res[i], 0, matrix[i].length);
         }
         return res;
     }
