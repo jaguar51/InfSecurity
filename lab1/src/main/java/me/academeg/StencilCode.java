@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class StencilCode {
 
-    private static char SPECIAL_FREE_SYMBOL = '•';
+    private static char SPECIAL_FREE_SYMBOL = 8226;
     private Random random;
     private String garbageSymbols;
 
