@@ -1,7 +1,5 @@
 package me.academeg.backpack;
 
-import me.academeg.PrimaryNumberUtils;
-
 import java.util.Arrays;
 
 /**

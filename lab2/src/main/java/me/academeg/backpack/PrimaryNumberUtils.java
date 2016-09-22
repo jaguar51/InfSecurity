@@ -1,4 +1,4 @@
-package me.academeg;
+package me.academeg.backpack;
 
 public class PrimaryNumberUtils {
 
