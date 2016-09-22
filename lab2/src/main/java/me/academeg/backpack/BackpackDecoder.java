@@ -18,12 +18,12 @@ public class BackpackDecoder {
 
     private int q;
     private int r;
-    private int[] privateKey;
+    private int[] secretKey;
 
     private int[] publicKey;
 
-    public BackpackDecoder(int[] privateKey) {
-        this.privateKey = privateKey;
+    public BackpackDecoder(int[] secretKey) {
+        this.secretKey = secretKey;
         generatePublicKey();
     }
 
@@ -32,12 +32,12 @@ public class BackpackDecoder {
     }
 
     private void generatePublicKey() {
-        int totalSumPrivateKey = Arrays.stream(privateKey).sum();
-        q = PrimaryNumberUtils.getPrimeNumber(totalSumPrivateKey);
+        int totalSumSecretKey = Arrays.stream(secretKey).sum();
+        q = PrimaryNumberUtils.getPrimeNumber(totalSumSecretKey);
         r = q / 2;
-        publicKey = new int[privateKey.length];
-        for (int i = 0; i < privateKey.length; i++) {
-            publicKey[i] = r * privateKey[i] % q;
+        publicKey = new int[secretKey.length];
+        for (int i = 0; i < secretKey.length; i++) {
+            publicKey[i] = r * secretKey[i] % q;
         }
     }
 
@@ -52,14 +52,14 @@ public class BackpackDecoder {
     }
 
     private char[] decodeElement(int el) {
-        char[] bites = new char[privateKey.length];
+        char[] bites = new char[secretKey.length];
         for (int i = 0; i < bites.length; i++) {
             bites[i] = '0';
         }
-        for (int i = privateKey.length - 1; i >= 0 && el > 0; i--) {
-            if (el / privateKey[i] > 0) {
+        for (int i = secretKey.length - 1; i >= 0 && el > 0; i--) {
+            if (el / secretKey[i] > 0) {
                 bites[i] = '1';
-                el -= el / privateKey[i] * privateKey[i];
+                el -= el / secretKey[i] * secretKey[i];
             }
         }
         return bites;
@@ -74,6 +74,9 @@ public class BackpackDecoder {
             String binarySymbol = binaryText.substring(i, i + SYMBOL_SIZE);
             char c = (char) Integer.valueOf(binarySymbol, 2).shortValue();
             builder.append(c);
+        }
+        if (builder.charAt(builder.length() - 1) == 0) {
+            builder.deleteCharAt(builder.length() - 1);
         }
         return builder.toString();
     }
