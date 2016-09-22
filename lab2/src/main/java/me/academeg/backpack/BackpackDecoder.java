@@ -16,8 +16,8 @@ public class BackpackDecoder {
 
     private static int SYMBOL_SIZE = 16;
 
-    int q;
-    int r;
+    private int q;
+    private int r;
     private int[] privateKey;
 
     private int[] publicKey;
