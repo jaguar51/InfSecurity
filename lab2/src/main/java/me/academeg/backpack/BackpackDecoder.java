@@ -1,4 +1,6 @@
-package me.academeg;
+package me.academeg.backpack;
+
+import me.academeg.PrimaryNumberUtils;
 
 import java.util.Arrays;
 
@@ -10,7 +12,7 @@ import java.util.Arrays;
  * https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D1%80%D0%B0%D0%BD%D1%86%D0%B5_%D0%B2_%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8
  */
 @SuppressWarnings("unused")
-public class BackpackCode {
+public class BackpackDecoder {
 
     private static int SYMBOL_SIZE = 16;
 
@@ -20,7 +22,7 @@ public class BackpackCode {
 
     private int[] publicKey;
 
-    public BackpackCode(int[] privateKey) {
+    public BackpackDecoder(int[] privateKey) {
         this.privateKey = privateKey;
         generatePublicKey();
     }
@@ -37,22 +39,6 @@ public class BackpackCode {
         for (int i = 0; i < privateKey.length; i++) {
             publicKey[i] = r * privateKey[i] % q;
         }
-    }
-
-    public int[] encode(String text) {
-        String binaryText = textToBinaryString(text);
-        int keySize = publicKey.length;
-        int[] code = new int[binaryText.length() / keySize];
-        int posCode = 0;
-        for (int i = 0; i < binaryText.length(); i += keySize) {
-            for (int j = 0; j < keySize; j++) {
-                if (binaryText.charAt(i + j) == '1') {
-                    code[posCode] += publicKey[j];
-                }
-            }
-            posCode++;
-        }
-        return code;
     }
 
     public String decode(int[] code) {
@@ -88,27 +74,6 @@ public class BackpackCode {
             String binarySymbol = binaryText.substring(i, i + SYMBOL_SIZE);
             char c = (char) Integer.valueOf(binarySymbol, 2).shortValue();
             builder.append(c);
-        }
-        return builder.toString();
-    }
-
-    private String textToBinaryString(String text) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < text.length(); i++) {
-            String binary = Integer.toBinaryString((int) text.charAt(i));
-            int countBits = SYMBOL_SIZE - binary.length();
-            for (int j = 0; j < countBits; j++) {
-                builder.append('0');
-            }
-            builder.append(binary);
-        }
-
-        int keySize = privateKey.length;
-        if (builder.length() % keySize != 0) {
-            int count = keySize - builder.length() % keySize;
-            for (int i = 0; i < count; i++) {
-                builder.append('0');
-            }
         }
         return builder.toString();
     }
