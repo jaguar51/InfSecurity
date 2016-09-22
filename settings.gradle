@@ -1,2 +1,4 @@
 rootProject.name = 'InfSecurity'
 include 'lab1'
+include 'lab2'
+
