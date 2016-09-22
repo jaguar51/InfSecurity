@@ -1,16 +1,23 @@
 package me.academeg;
 
+import java.util.Arrays;
+
 /**
  * Описание
  * https://ru.wikipedia.org/wiki/Ранцевая_криптосистема_Меркла_—_Хеллмана
+ * https://sites.google.com/site/anisimovkhv/learning/kripto/lecture/tema8#p83
+ * https://webcache.googleusercontent.com/search?q=cache:0pgprGqnvaoJ:https://asoiu.files.wordpress.com/2010/02/d0b7d0b0d0b4d0b0d187d0b0-d0be-d180d18ed0bad0b7d0b0d0bad0b5.ppt+&cd=8&hl=ru&ct=clnk&gl=ru
+ * https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D1%80%D0%B0%D0%BD%D1%86%D0%B5_%D0%B2_%D0%BA%D1%80%D0%B8%D0%BF%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D0%B8
  */
 @SuppressWarnings("unused")
 public class BackpackCode {
 
     private static int SYMBOL_SIZE = 16;
+
     int q;
     int r;
     private int[] privateKey;
+
     private int[] publicKey;
 
     public BackpackCode(int[] privateKey) {
@@ -18,17 +25,14 @@ public class BackpackCode {
         generatePublicKey();
     }
 
+    public int[] getPublicKey() {
+        return publicKey;
+    }
+
     private void generatePublicKey() {
-        int totalSumPrivateKey = 0;
-        for (int iKey : privateKey) {
-            totalSumPrivateKey += iKey;
-        }
-
-//        q = PrimaryNumberUtils.getPrimeNumber(totalSumPrivateKey);
-//        r = q / 2;
-        q = 881;
-        r = 588;
-
+        int totalSumPrivateKey = Arrays.stream(privateKey).sum();
+        q = PrimaryNumberUtils.getPrimeNumber(totalSumPrivateKey);
+        r = q / 2;
         publicKey = new int[privateKey.length];
         for (int i = 0; i < privateKey.length; i++) {
             publicKey[i] = r * privateKey[i] % q;
@@ -37,7 +41,6 @@ public class BackpackCode {
 
     public int[] encode(String text) {
         String binaryText = textToBinaryString(text);
-        System.out.println(binaryText);
         int keySize = publicKey.length;
         int[] code = new int[binaryText.length() / keySize];
         int posCode = 0;
@@ -55,16 +58,14 @@ public class BackpackCode {
     public String decode(int[] code) {
         StringBuilder builder = new StringBuilder();
         int inverseR = multiInverse(r, q);
-        System.out.println("in " + inverseR + " q " + q + " r " + r);
         for (int el : code) {
             el = el * inverseR % q;
             builder.append(decodeElement(el));
         }
-        System.out.println(builder.toString());
         return textFromBinaryString(builder.toString());
     }
 
-    public char[] decodeElement(int el) {
+    private char[] decodeElement(int el) {
         char[] bites = new char[privateKey.length];
         for (int i = 0; i < bites.length; i++) {
             bites[i] = '0';
@@ -114,12 +115,12 @@ public class BackpackCode {
 
     /**
      * Стандартный алгоритм Евклида решает задачу для выражения: ax+by=d
-     * Чтобы решить для случая, ax-by=d; мы инвертируем значение b.
      *
-     * @return мультипликативно обратное число для a
+     * @return мультипликативно обратное число для a, по модулю b
      */
-    public int multiInverse(long a, long b) {
-        b = -b;
+    private int multiInverse(long aa, long bb) {
+        long a = aa;
+        long b = bb;
         long x = 0;
         long y = 1;
         long lastX = 1;
@@ -140,10 +141,6 @@ public class BackpackCode {
             y = lastY - q * y;
             lastY = temp;
         }
-        return (int) 442;
-    }
-
-    public int[] getPublicKey() {
-        return publicKey;
+        return (int) ((lastX % bb + bb) % bb);
     }
 }
