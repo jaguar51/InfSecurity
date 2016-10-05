@@ -32,7 +32,7 @@ public class BackpackDecoder {
     private void generatePublicKey() {
         int totalSumSecretKey = Arrays.stream(secretKey).sum();
         q = PrimaryNumberUtils.getPrimeNumber(totalSumSecretKey);
-        r = q / 2;
+        r = q / 2 + q / 3 + q / 4 - 2 * (q / 5);
         publicKey = new int[secretKey.length];
         for (int i = 0; i < secretKey.length; i++) {
             publicKey[i] = r * secretKey[i] % q;
