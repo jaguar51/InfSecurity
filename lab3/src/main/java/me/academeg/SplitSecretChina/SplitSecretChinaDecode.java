@@ -19,10 +19,11 @@ public class SplitSecretChinaDecode {
     public int getSecret() {
         int[] f = generateAdditionalArr();
         int secret = 0;
+        int multiplyPublic = getMultiplyPublicWithout(-1);
         for (int i = 0; i < countSecret; i++) {
-            secret += secretKey[i] * getMultiplyPublicWithout(i) * f[i];
+            secret = secret + (secretKey[i] * getMultiplyPublicWithout(i) * f[i]);
         }
-        return secret % getMultiplyPublicWithout(-1);
+        return secret % multiplyPublic;
     }
 
     private int[] generateAdditionalArr() {

@@ -1,5 +1,7 @@
 package me.academeg.SplitSecretChina;
 
+import java.util.Arrays;
+
 @SuppressWarnings("unused")
 public class SplitSecretChinaEncode {
 
@@ -29,6 +31,9 @@ public class SplitSecretChinaEncode {
     }
 
     public int[] getSecretKey() {
+        if (secretKey == null) {
+            generateSecretKey();
+        }
         return secretKey;
     }
 
@@ -47,6 +52,7 @@ public class SplitSecretChinaEncode {
         for (int i = 0; i < k - 1; i++) {
             secretRange[0] *= publicKey[publicKey.length - 1 - i];
         }
+        Arrays.sort(secretRange);
         secret = secretRange[0] + (secretRange[1] - secretRange[0]) / 2;
     }
 
