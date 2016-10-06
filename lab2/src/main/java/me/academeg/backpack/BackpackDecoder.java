@@ -14,14 +14,16 @@ public class BackpackDecoder {
 
     private static int SYMBOL_SIZE = 16;
 
-    private int q;
-    private int r;
+    private int mod;
+    private int mult;
     private int[] secretKey;
 
     private int[] publicKey;
 
-    public BackpackDecoder(int[] secretKey) {
+    public BackpackDecoder(int[] secretKey, int mod, int mult) {
         this.secretKey = secretKey;
+        this.mod = mod;
+        this.mult = mult;
         generatePublicKey();
     }
 
@@ -31,19 +33,17 @@ public class BackpackDecoder {
 
     private void generatePublicKey() {
         int totalSumSecretKey = Arrays.stream(secretKey).sum();
-        q = PrimaryNumberUtils.getPrimeNumber(totalSumSecretKey);
-        r = q / 2 + q / 3 + q / 4 - 2 * (q / 5);
         publicKey = new int[secretKey.length];
         for (int i = 0; i < secretKey.length; i++) {
-            publicKey[i] = r * secretKey[i] % q;
+            publicKey[i] = mult * secretKey[i] % mod;
         }
     }
 
     public String decode(int[] code) {
         StringBuilder builder = new StringBuilder();
-        int inverseR = multiInverse(r, q);
+        int inverseR = multiInverse(mult, mod);
         for (int el : code) {
-            el = el * inverseR % q;
+            el = el * inverseR % mod;
             builder.append(decodeElement(el));
         }
         return textFromBinaryString(builder.toString());

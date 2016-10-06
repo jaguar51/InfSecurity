@@ -42,7 +42,11 @@ public class Main {
         for (int i = 0; i < size; i++) {
             key[i] = scanner.nextInt();
         }
-        BackpackDecoder code = new BackpackDecoder(key);
+        System.out.print("Введите модуль: ");
+        int mod = scanner.nextInt();
+        System.out.print("Введите множитель: ");
+        int mult = scanner.nextInt();
+        BackpackDecoder code = new BackpackDecoder(key, mod, mult);
         for (int el : code.getPublicKey()) {
             System.out.printf(el + " ");
         }
@@ -76,6 +80,11 @@ public class Main {
         for (int i = 0; i < size; i++) {
             key[i] = scanner.nextInt();
         }
+        System.out.print("Введите модуль: ");
+        int mod = scanner.nextInt();
+        System.out.print("Введите множитель: ");
+        int mult = scanner.nextInt();
+
         System.out.println("Введите зашифрованное сообщение:");
         scanner.nextLine();
         String text = scanner.nextLine();
@@ -84,7 +93,7 @@ public class Main {
         for (int i = 0; i < lines.length; i++) {
             code[i] = Integer.parseInt(lines[i]);
         }
-        BackpackDecoder coder = new BackpackDecoder(key);
+        BackpackDecoder coder = new BackpackDecoder(key, mod, mult);
         System.out.println(coder.decode(code));
         System.out.println();
     }
