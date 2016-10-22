@@ -64,4 +64,30 @@ final public class Utils {
         }
         return builder.toString();
     }
+
+    public static int multiInverse(long aa, long bb) {
+        long a = aa;
+        long b = bb;
+        long x = 0;
+        long y = 1;
+        long lastX = 1;
+        long lastY = 0;
+        long temp;
+        while (b != 0) {
+            long q = a / b;
+            long r = a % b;
+
+            a = b;
+            b = r;
+
+            temp = x;
+            x = lastX - q * x;
+            lastX = temp;
+
+            temp = y;
+            y = lastY - q * y;
+            lastY = temp;
+        }
+        return a == 1 ? (int) ((lastX % bb + bb) % bb) : 0;
+    }
 }
