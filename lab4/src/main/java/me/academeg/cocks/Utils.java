@@ -48,4 +48,27 @@ final public class Utils {
         hashCode ^= (hashCode >>> 7) ^ (hashCode >>> 4);
         return hashCode < 0 ? -hashCode : hashCode;
     }
+
+    public static String convertStringForEncoding(String stock) {
+        StringBuilder builder = new StringBuilder(stock.length());
+        for (int i = 0; i < stock.length(); i++) {
+            builder.append(stock.charAt(i) == '0' ? "-1" : stock.charAt(i));
+        }
+        return builder.toString();
+    }
+
+    public static String convertStringAfterDecoding(String decode) {
+        StringBuilder builder = new StringBuilder(decode.length());
+        int i = 0;
+        while (i < decode.length()) {
+            if (decode.charAt(i) == '-') {
+                builder.append("0");
+                i++;
+            } else {
+                builder.append(decode.charAt(i));
+            }
+            i++;
+        }
+        return builder.toString();
+    }
 }
