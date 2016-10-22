@@ -1,7 +1,7 @@
 package me.academeg.cocks;
 
 /**
- * CocksDecoder
+ * CocksDecoder Decoder
  *
  * @author Yuriy A. Samsonov <y.samsonov@erpscan.com>
  * @version 1.0

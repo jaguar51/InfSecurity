@@ -19,8 +19,9 @@ final public class CocksPKG {
     }
 
     public static int userR(int a, int p, int q) {
-        int pow = (p * q + 5 - p - q) / 8;
-        BigInteger bigInteger = BigInteger.valueOf(a).pow(pow).mod(BigInteger.valueOf(p * q));
+        int n = p * q;
+        int pow = (n + 5 - p - q) / 8;
+        BigInteger bigInteger = BigInteger.valueOf(a).pow(pow).mod(BigInteger.valueOf(n));
         return bigInteger.intValue();
     }
 }
