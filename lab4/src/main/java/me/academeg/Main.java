@@ -3,7 +3,6 @@ package me.academeg;
 import me.academeg.cocks.CocksDecoder;
 import me.academeg.cocks.CocksEncoder;
 import me.academeg.cocks.CocksPKG;
-import me.academeg.cocks.Utils;
 
 /**
  * Main

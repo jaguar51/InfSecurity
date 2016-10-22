@@ -1,4 +1,4 @@
-package me.academeg.cocks;
+package me.academeg.cocks.util;
 
 /**
  * TextUtils
