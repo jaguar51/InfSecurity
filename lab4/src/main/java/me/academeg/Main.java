@@ -1,5 +1,7 @@
 package me.academeg;
 
+import me.academeg.cocks.CocksDecoder;
+import me.academeg.cocks.CocksEncoder;
 import me.academeg.cocks.CocksPKG;
 import me.academeg.cocks.Utils;
 
@@ -15,11 +17,20 @@ public class Main {
     }
 
     private void run() {
-        int p = 15;
-        int q = 19;
-        int a = CocksPKG.hashA(103, p * q);
-        System.out.println(a);
-        System.out.println(CocksPKG.userR(a, p, q));
-        System.out.println(Utils.jacobiSymbol(3, 7));
+        int p = 7;
+        int q = 11;
+        int n = p * q;
+
+        int id = 1;
+
+        int a = CocksPKG.hashA(id, n);
+
+        CocksEncoder encoder = new CocksEncoder();
+        String stockText = "Aa";
+        int[][] encode = encoder.encode(stockText, a, n);
+
+        CocksDecoder decoder = new CocksDecoder();
+        String decode = decoder.decoder(encode, CocksPKG.userR(a, p, q), a, n);
+        System.out.println(decode);
     }
 }

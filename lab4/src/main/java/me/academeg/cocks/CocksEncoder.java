@@ -1,6 +1,7 @@
 package me.academeg.cocks;
 
-import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Random;
 
 /**
  * CocksEncoder Encoder
@@ -10,22 +11,26 @@ import java.io.UnsupportedEncodingException;
  */
 public class CocksEncoder {
 
-    public void encode(String text, int a) {
-        String encode = convertText(text);
-    }
+    public int[][] encode(String text, int a, int n) {
+        Random rand = new Random(System.currentTimeMillis());
+        byte[] textForEncoding = Utils.convertForEncoding(TextUtils.textToBinaryString(text));
+        System.out.println(Arrays.toString(textForEncoding));
+        int[][] res = new int[textForEncoding.length][2];
 
-    public String convertText(String text) {
-        StringBuilder builder = new StringBuilder();
-        byte[] infoBin = new byte[0];
-        try {
-            infoBin = text.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        for (int i = 0; i < textForEncoding.length; i++) {
+            int t1 = rand.nextInt(n);
+            while (Utils.jacobiSymbol(t1, n) != textForEncoding[i]) {
+                t1 = rand.nextInt(n);
+            }
+
+            int t2 = rand.nextInt(n);
+            while (Utils.jacobiSymbol(t2, n) != textForEncoding[i] || t1 == t2) {
+                t2 = rand.nextInt(n);
+            }
+
+            res[i][0] = t1 + a * Utils.multiInverse(t1, n);
+            res[i][1] = t2 - a * Utils.multiInverse(t2, n);
         }
-        for (byte b : infoBin) {
-            System.out.println("c:" + (char) b + "-> "
-                    + Integer.toBinaryString(b));
-        }
-        return builder.toString();
+        return res;
     }
 }
