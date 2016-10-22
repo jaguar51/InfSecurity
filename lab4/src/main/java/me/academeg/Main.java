@@ -3,6 +3,12 @@ package me.academeg;
 import me.academeg.cocks.CocksPKG;
 import me.academeg.cocks.Utils;
 
+/**
+ * Main
+ *
+ * @author Yuriy A. Samsonov <y.samsonov@erpscan.com>
+ * @version 1.0
+ */
 public class Main {
     public static void main(String[] args) {
         new Main().run();
@@ -14,6 +20,6 @@ public class Main {
         int a = CocksPKG.hashA(103, p * q);
         System.out.println(a);
         System.out.println(CocksPKG.userR(a, p, q));
-        System.out.println(Utils.jakobiSymbol(3,7));
+        System.out.println(Utils.jacobiSymbol(3, 7));
     }
 }

@@ -12,7 +12,7 @@ final public class CocksPKG {
 
     public static int hashA(int id, int n) {
         id = Utils.hash(id);
-        while (Utils.jakobiSymbol(id, n) != 1) {
+        while (Utils.jacobiSymbol(id, n) != 1) {
             id = Utils.hash(id);
         }
         return id;
