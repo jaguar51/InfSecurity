@@ -49,25 +49,18 @@ final public class Utils {
         return hashCode < 0 ? -hashCode : hashCode;
     }
 
-    public static String convertStringForEncoding(String stock) {
-        StringBuilder builder = new StringBuilder(stock.length());
+    public static byte[] convertForEncoding(String stock) {
+        byte[] bytes = new byte[stock.length()];
         for (int i = 0; i < stock.length(); i++) {
-            builder.append(stock.charAt(i) == '0' ? "-1" : stock.charAt(i));
+            bytes[i] = (byte) (stock.charAt(i) == '0' ? -1 : 1);
         }
-        return builder.toString();
+        return bytes;
     }
 
-    public static String convertStringAfterDecoding(String decode) {
-        StringBuilder builder = new StringBuilder(decode.length());
-        int i = 0;
-        while (i < decode.length()) {
-            if (decode.charAt(i) == '-') {
-                builder.append("0");
-                i++;
-            } else {
-                builder.append(decode.charAt(i));
-            }
-            i++;
+    public static String convertAfterDecoding(byte[] decode) {
+        StringBuilder builder = new StringBuilder(decode.length);
+        for (int i = 0; i < decode.length; i++) {
+            builder.append(decode[i] == -1 ? 0 : 1);
         }
         return builder.toString();
     }
