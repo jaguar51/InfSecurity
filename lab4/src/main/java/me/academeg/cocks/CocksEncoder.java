@@ -28,5 +28,4 @@ public class CocksEncoder {
         }
         return builder.toString();
     }
-
 }
