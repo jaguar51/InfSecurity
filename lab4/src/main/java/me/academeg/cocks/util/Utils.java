@@ -16,12 +16,12 @@ final public class Utils {
      * @return -1 or 1
      */
     public static int jacobiSymbol(int a, int p) {
-        if (a == 0 || p == 0) {
-            return 0;
-        }
-
         if (a < 0) {
             return jacobiSymbol(-a, p) * powMinusOne((p - 1) / 2);
+        }
+
+        if (a % p == 0) {
+            return 0;
         }
 
         if (a % 2 == 0) {

@@ -18,7 +18,7 @@ public class CocksDecoder {
         boolean flag = ((int) Math.pow(r, 2)) % n == a;
         for (int i = 0; i < code.length; i++) {
             int alpha = flag ? code[i][0] + 2 * r : code[i][1] + 2 * r;
-            res[i]= (byte) Utils.jacobiSymbol(alpha, n);
+            res[i] = (byte) Utils.jacobiSymbol(alpha, n);
         }
         System.out.println(Arrays.toString(res));
         String binaryText = Utils.convertAfterDecoding(res);
