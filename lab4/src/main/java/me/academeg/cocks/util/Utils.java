@@ -43,10 +43,14 @@ final public class Utils {
         return pow % 2 == 0 ? 1 : -1;
     }
 
-    public static int hash(int hashCode) {
-        hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-        hashCode ^= (hashCode >>> 7) ^ (hashCode >>> 4);
-        return hashCode < 0 ? -hashCode : hashCode;
+    public static int hash(int key) {
+        key = ~key + (key << 15);
+        key = key ^ (key >>> 12);
+        key = key + (key << 2);
+        key = key ^ (key >>> 4);
+        key = key * 2057;
+        key = key ^ (key >>> 16);
+        return key < 0 ? -key % 10 : key % 10;
     }
 
     public static byte[] convertForEncoding(String stock) {
