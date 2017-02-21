@@ -16,13 +16,16 @@ public class CocksDecoder {
     public String decoder(int[][] code, int r, int a, int n) {
         byte[] res = new byte[code.length];
         boolean flag = ((int) Math.pow(r, 2)) % n == a;
+        System.out.println("decoder");
+        System.out.println(r + " " + a);
+        System.out.println(Arrays.deepToString(code));
+        System.out.println(flag);
         for (int i = 0; i < code.length; i++) {
             int alpha = flag ? code[i][0] + 2 * r : code[i][1] + 2 * r;
+            System.out.println(alpha + " " + n);
             res[i] = (byte) Utils.jacobiSymbol(alpha, n);
         }
         System.out.println(Arrays.toString(res));
-        String binaryText = Utils.convertAfterDecoding(res);
-        String text = TextUtils.textFromBinaryString(binaryText);
-        return text;
+        return TextUtils.textFromBinaryString(Utils.convertAfterDecoding(res));
     }
 }
